@@ -150,7 +150,7 @@ SQLITE_EXTENSION_INIT1
 #include <stdlib.h>
 #include <assert.h>
 
-#ifndef _SQLITEINT_H_
+#ifndef SQLITEINT_H
 #include "sqliteInt.h"
 #endif
 
