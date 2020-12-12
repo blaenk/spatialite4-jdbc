@@ -93,7 +93,7 @@ ZLIB_LIB=$(ZLIB_DIR)/src/.libs/libz.a
 
 $(ZLIB_ARCHIVE):
 	@mkdir -p $(@D)
-	curl -o $@ http://fossies.org/linux/misc/zlib-$(ZLIB_VERSION).tar.gz
+	curl -o $@ https://fossies.org/linux/misc/zlib-$(ZLIB_VERSION).tar.gz
 	
 $(ZLIB_UNPACKED): $(ZLIB_ARCHIVE)
 	tar -xzf $< -C $(TARGET)
@@ -110,7 +110,7 @@ LZMA_LIB=$(LZMA_DIR)/src/sdk/7zip/Compress/LZMA/libLZMA.a
 
 $(LZMA_ARCHIVE):
 	@mkdir -p $(@D)
-	curl -o $@ http://tukaani.org/lzma/lzma-$(LZMA_VERSION).tar.gz
+	curl -o $@ https://tukaani.org/lzma/lzma-$(LZMA_VERSION).tar.gz
 	
 $(LZMA_UNPACKED): $(LZMA_ARCHIVE)
 	tar -xzf $< -C $(TARGET)
@@ -126,7 +126,7 @@ SQLITE_AMAL_DIR=$(TARGET)/$(SQLITE_AMAL_PREFIX)
 
 $(SQLITE_ARCHIVE):
 	@mkdir -p $(@D)
-	curl -o $@ http://www.sqlite.org/2016/$(SQLITE_AMAL_PREFIX).zip
+	curl -o $@ http://www.sqlite.org/2020/$(SQLITE_AMAL_PREFIX).zip
 
 $(SQLITE_UNPACKED): $(SQLITE_ARCHIVE)
 	unzip -qo $< -d $(TARGET)
