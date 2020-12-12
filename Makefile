@@ -42,7 +42,7 @@ GEOS_C_LIB=$(GEOS_DIR)/capi/.libs/libgeos_c.a
 
 $(GEOS_ARCHIVE):
 	@mkdir -p $(@D)
-	curl -o $@ http://download.osgeo.org/geos/geos-$(GEOS_VERSION).tar.bz2
+	curl -o $@ https://download.osgeo.org/geos/geos-$(GEOS_VERSION).tar.bz2
 	
 $(GEOS_UNPACKED): $(GEOS_ARCHIVE)
 	tar -xjf $< -C $(TARGET)
@@ -126,7 +126,7 @@ SQLITE_AMAL_DIR=$(TARGET)/$(SQLITE_AMAL_PREFIX)
 
 $(SQLITE_ARCHIVE):
 	@mkdir -p $(@D)
-	curl -o $@ http://www.sqlite.org/2020/$(SQLITE_AMAL_PREFIX).zip
+	curl -o $@ https://www.sqlite.org/2020/$(SQLITE_AMAL_PREFIX).zip
 
 $(SQLITE_UNPACKED): $(SQLITE_ARCHIVE)
 	unzip -qo $< -d $(TARGET)
@@ -140,7 +140,7 @@ SPATIALITE_VIRTUALTEXT_LIB=$(SPATIALITE_DIR)/src/virtualtext/.libs/libvirtualtex
 
 $(SPATIALITE_ARCHIVE):
 	@mkdir -p $(@D)
-	curl -o$@ http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-$(SPATIALITE_VERSION).zip
+	curl -o$@ https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-$(SPATIALITE_VERSION).zip
 	
 $(SPATIALITE_UNPACKED): $(SPATIALITE_ARCHIVE)
 	unzip -qo $< -d $(TARGET)
