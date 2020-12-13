@@ -142,7 +142,7 @@ CFLAGS    := $($(target)_CFLAGS)
 LINKFLAGS := $($(target)_LINKFLAGS) 
 LIBNAME   := $($(target)_LIBNAME)
 SQLITE_FLAGS := $($(target)_SQLITE_FLAGS)
-SQLITE_AMAL_PREFIX = sqlite-amalgamation-$(shell ./amalgamation_version.sh $(version))
+SQLITE_AMAL_PREFIX = sqlite-autoconf-$(shell ./amalgamation_version.sh $(version))
 CFLAGS := $(CFLAGS) 
 ifneq ($(jni_include),)
 CFLAGS := $(CFLAGS) -I"$(jni_include)"

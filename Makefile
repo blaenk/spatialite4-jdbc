@@ -52,6 +52,23 @@ $(GEOS_LIB): $(GEOS_UNPACKED)
 	if [ ! -f $(GEOS_DIR)/Makefile ]; then (cd $(GEOS_DIR) && $(GEOS_FORCE_COMPILERS) ./configure $(GEOS_CONFIG_FLAGS)); fi;	
 	(cd $(GEOS_DIR) && make)
 
+SQLITE_ARCHIVE:=$(TARGET)/$(sqlite)-amal.zip
+SQLITE_UNPACKED:=$(TARGET)/sqlite-unpack.log
+SQLITE_AMAL_DIR=$(TARGET)/$(SQLITE_AMAL_PREFIX)
+SQLITE_BINARY=$(SQLITE_AMAL_DIR)/sqlite3
+
+$(SQLITE_ARCHIVE):
+	@mkdir -p $(@D)
+	curl -o $@ https://www.sqlite.org/2020/$(SQLITE_AMAL_PREFIX).tar.gz
+
+$(SQLITE_UNPACKED): $(SQLITE_ARCHIVE)
+	tar -xzf $< -C $(TARGET)
+	touch $@
+
+$(SQLITE_BINARY): $(SQLITE_UNPACKED)
+	if [ ! -f $(SQLITE_AMAL_DIR)/Makefile ]; then (cd $(SQLITE_AMAL_DIR) && ./configure); fi;
+	(cd $(SQLITE_AMAL_DIR) && make)
+
 PROJ_ARCHIVE:=$(TARGET)/proj-$(PROJ_VERSION).tar.gz
 PROJ_UNPACKED:=$(TARGET)/proj-unpack.log
 PROJ_DIR=$(TARGET)/proj-$(PROJ_VERSION)
@@ -65,8 +82,8 @@ $(PROJ_UNPACKED): $(PROJ_ARCHIVE)
 	tar -xzf $< -C $(TARGET)
 	touch $@
 
-$(PROJ_LIB): $(PROJ_UNPACKED)
-	if [ ! -f $(PROJ_DIR)/Makefile ]; then (cd $(PROJ_DIR) && ./configure $(PROJ_CONFIG_FLAGS)); fi;
+$(PROJ_LIB): $(PROJ_UNPACKED) $(SQLITE_BINARY)
+	if [ ! -f $(PROJ_DIR)/Makefile ]; then (cd $(PROJ_DIR) && SQLITE3_CFLAGS="-I$(SQLITE_AMAL_DIR)" ./configure $(PROJ_CONFIG_FLAGS)); fi;
 	(cd $(PROJ_DIR) && make)
 
 LIBXML2_ARCHIVE:=$(TARGET)/libxml2-$(LIBXML2_VERSION).tar.gz
@@ -119,18 +136,6 @@ $(LZMA_UNPACKED): $(LZMA_ARCHIVE)
 $(LZMA_LIB): $(LZMA_UNPACKED)
 	if [ ! -f $(LZMA_DIR)/Makefile ]; then (cd $(LZMA_DIR) && ./configure $(LZMA_CONFIG_FLAGS)); fi;
 	(cd $(LZMA_DIR) && make)
-
-SQLITE_ARCHIVE:=$(TARGET)/$(sqlite)-amal.zip
-SQLITE_UNPACKED:=$(TARGET)/sqlite-unpack.log
-SQLITE_AMAL_DIR=$(TARGET)/$(SQLITE_AMAL_PREFIX)
-
-$(SQLITE_ARCHIVE):
-	@mkdir -p $(@D)
-	curl -o $@ https://www.sqlite.org/2020/$(SQLITE_AMAL_PREFIX).zip
-
-$(SQLITE_UNPACKED): $(SQLITE_ARCHIVE)
-	unzip -qo $< -d $(TARGET)
-	touch $@
 
 SPATIALITE_ARCHIVE:=$(TARGET)/libspatialite-$(SPATIALITE_VERSION).zip
 SPATIALITE_UNPACKED:=$(TARGET)/spatialite-unpack.log
